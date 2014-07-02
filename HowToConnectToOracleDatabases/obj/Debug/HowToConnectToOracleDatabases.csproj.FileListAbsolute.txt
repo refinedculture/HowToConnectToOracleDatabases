@@ -1,0 +1,1 @@
+C:\Users\Streak\Desktop\VSProjects\HowToConnectToOracleDatabases\HowToConnectToOracleDatabases\bin\Debug\HowToConnectToOracleDatabases.exe.config
