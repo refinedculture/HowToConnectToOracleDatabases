@@ -122,6 +122,95 @@ namespace HowToConnectToOracleDatabases
         #endregion Get Database Tables
 
 
+        #region Find Primary Key(s) for a given table name
+        private List<string> GetPrimaryKeysForTable_OracleDA(string tableName)
+        {
+            List<string> primaryKeyList = new List<string>();
+
+            try
+            {
+                var conStr = GetConnectionString_OracleDA();
+                using (var con = new OracleConnection(conStr))
+                {
+                    con.Open();
+                    using (var cmd = new OracleCommand(
+                        "SELECT cols.table_name, cols.column_name, cols.position, cons.status, cons.owner " +
+                        "FROM all_constraints cons, all_cons_columns cols " +
+                        "WHERE cols.table_name = upper('" + tableName.ToUpper() + "') " +
+                        "AND cons.constraint_type = 'P' " +
+                        "AND cons.constraint_name = cols.constraint_name " +
+                        "AND cons.owner = cols.owner " +
+                        "ORDER BY cols.table_name, cols.position", con))
+                    {
+                        using (var reader = cmd.ExecuteReader(CommandBehavior.SingleResult))
+                        {
+                            while (reader.Read())
+                            {
+                                primaryKeyList.Add(reader["COLUMN_NAME"].ToString().ToUpper());
+                            }
+                        }
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                MessageBox.Show("Failure in  function GetPrimaryKeysForTable_OracleDA. Exception - " + ex.Message);
+                LogMessage("Failure in  function GetPrimaryKeysForTable_OracleDA. Exception - " + ex.Message, MessageSeverity.Error);
+            }
+
+            if (primaryKeyList.Count <= 0)
+            {
+                MessageBox.Show("Error in GetPrimaryKeysForTable_OracleDA - No Primary Key(s) retrieved for table '" + tableName.ToUpper() + "'");
+                LogMessage("Error in GetPrimaryKeysForTable_OracleDA - No Primary Key(s) retrieved for table '" + tableName.ToUpper() + "'", MessageSeverity.Error);
+            }
+
+            return primaryKeyList;
+        }
+
+        private List<string> GetPrimaryKeysForTable_OleDBDA(string tableName)
+        {
+            List<string> primaryKeyList = new List<string>();
+
+            try
+            {
+                var conStr = GetConnectionString_OleDBDA();
+                using (var con = new OleDbConnection(conStr))
+                {
+                    con.Open();
+                    using (var cmd = new OleDbCommand(
+                        "SELECT cols.table_name, cols.column_name, cols.position, cons.status, cons.owner " +
+                        "FROM all_constraints cons, all_cons_columns cols " +
+                        "WHERE cols.table_name = upper('" + tableName.ToUpper() + "') " +
+                        "AND cons.constraint_type = 'P' " +
+                        "AND cons.constraint_name = cols.constraint_name " +
+                        "AND cons.owner = cols.owner " +
+                        "ORDER BY cols.table_name, cols.position", con))
+                    {
+                        using (var reader = cmd.ExecuteReader(CommandBehavior.SingleResult))
+                        {
+                            while (reader.Read())
+                            {
+                                primaryKeyList.Add(reader["COLUMN_NAME"].ToString().ToUpper());
+                            }
+                        }
+                    }
+                }
+            }
+            catch (OleDbException ex)
+            {
+                MessageBox.Show("Failure in  function GetPrimaryKeysForTable_OleDA. Exception - " + ex.Message);
+            }
+
+            if (primaryKeyList.Count <= 0)
+            {
+                MessageBox.Show("Error in GetPrimaryKeysForTable_OleDA - No Primary Key(s) retrieved for table '" + tableName.ToUpper() + "'");
+            }
+
+            return primaryKeyList;
+        }
+        #endregion Find Primary Key(s) for a given table name
+
+
         #region Does Table Have Audit Record - SAMPLE QUERY CODE
 
         /// <summary>

@@ -1,1 +1,5 @@
 C:\Users\Streak\Desktop\VSProjects\HowToConnectToOracleDatabases\HowToConnectToOracleDatabases\bin\Debug\HowToConnectToOracleDatabases.exe.config
+C:\Users\Streak\Documents\GitHub\HowToConnectToOracleDatabases\HowToConnectToOracleDatabases\bin\Debug\HowToConnectToOracleDatabases.exe.config
+C:\Users\Streak\Documents\GitHub\HowToConnectToOracleDatabases\HowToConnectToOracleDatabases\obj\Debug\HowToConnectToOracleDatabases.csprojResolveAssemblyReference.cache
+C:\Users\Streak\Documents\GitHub\HowToConnectToOracleDatabases\HowToConnectToOracleDatabases\obj\Debug\HowToConnectToOracleDatabases.Properties.Resources.resources
+C:\Users\Streak\Documents\GitHub\HowToConnectToOracleDatabases\HowToConnectToOracleDatabases\obj\Debug\HowToConnectToOracleDatabases.csproj.GenerateResource.Cache
